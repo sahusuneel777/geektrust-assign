@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.heading {
+  font-family: 'Roboto';
+  font-size: 40px;
+  color: #32404d;
+}
+
+.count {
+  font-size: 80px;
+  font-family: 'Roboto';
+  color: #2e3e4e;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.button {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Roboto';
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 8px;
+  background-color: #7c69e9;
+  border: none;
+  border-radius: 4px;
+}
+
+.user-item {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  border-bottom: 1px solid #2e3e4e;
+}
+
+.delete-button {
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.edit-button {
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+.edit-button:hover {
+  font-size: 16px;
+}
+
+.delete-icon {
+  color: #e81515;
+}
+
+.delete-button:hover {
+  font-size: 16px;
+}
+.name {
+  text-align: left;
+}
+
+.table-cell {
+  color: #1e293b;
+  font-family: 'Roboto';
+  font-size: 16px;
+  margin-left: 32px;
+  display: flex;
+  align-items: center;
+  width: 15%;
+}
+
+.email {
+  width: 20%;
+}
+
+@media screen and (max-width: 760px) {
+  .email {
+    width: 15%;
+    flex-wrap: wrap;
+  }
+}
