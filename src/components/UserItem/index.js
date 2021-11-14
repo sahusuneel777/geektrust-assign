@@ -4,27 +4,22 @@ import './index.css'
 
 const UserItem = props => {
   const {userDetails, deleteUserEntry, addToSelectedUsers} = props
-  // const {id, ischecked, name, email, role} = userDetails
-  const {id, name, email, role} = userDetails
+  const {id, ischecked, name, email, role} = userDetails
 
-  // console.log(typeof ischecked)
   const onClickDelete = () => {
     deleteUserEntry(id)
   }
 
   const onChangeCheck = event => {
-    // const ischecked = !ischecked
-    if (event.target.checked) {
-      addToSelectedUsers(id)
-      console.log('checked')
-    }
+    addToSelectedUsers(id)
+    console.log('checked')
   }
 
   return (
     <li className="user-item">
       <div className="table-cell">
-        {/* <input type="checkbox" checked={ischecked} onChange={onChangeCheck} /> */}
-        <input type="checkbox" onChange={onChangeCheck} />
+        <input type="checkbox" checked={ischecked} onChange={onChangeCheck} />
+        {/* <input type="checkbox" onChange={onChangeCheck} /> */}
       </div>
       <div className="table-cell">
         <p>{name}</p>

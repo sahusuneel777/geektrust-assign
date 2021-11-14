@@ -8,6 +8,7 @@ class AllUsers extends Component {
     usersDataList: [],
     selectedUsersList: [],
     searchInput: '',
+    ischecked: false,
     activeSearchCategory: 'name',
   }
 
@@ -16,17 +17,20 @@ class AllUsers extends Component {
   }
 
   getAllUsersData = async () => {
-    // const {checkedState} = this.state
+    const {ischecked} = this.state
     const url =
-      'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'
+      'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json?offset=0&limit=10'
     const options = {
       method: 'GET',
     }
 
     const response = await fetch(url, options)
     const fetchedUsersData = await response.json()
+    const updatedFetchedUserData = fetchedUsersData.map(eachfetch => {
+      return {...eachfetch, ischecked}
+    })
 
-    this.setState({usersDataList: fetchedUsersData})
+    this.setState({usersDataList: updatedFetchedUserData})
     // this.setState(prevState => ({
     //   usersDataList: prevState.usersDataList.map(eachFetch => {
     //     if (true) {
@@ -47,6 +51,13 @@ class AllUsers extends Component {
   addToSelectedUsers = selectedUserId => {
     this.setState(prevState => ({
       selectedUsersList: [...prevState.selectedUsersList, selectedUserId],
+
+      usersDataList: prevState.usersDataList.map(eachUser => {
+        if (selectedUserId === eachUser.id) {
+          return {...eachUser, ischecked: !eachUser.ischecked}
+        }
+        return eachUser
+      }),
     }))
   }
 
@@ -69,22 +80,16 @@ class AllUsers extends Component {
   }
 
   checkAllItems = event => {
-    //   // const {checkedState} = this.state
-    //   // this.setState(prevState => ({checkedState: !prevState.checkedState}))
-    //   // const checkedState = false
-    //   // if (checkedState === false) {
-    //   //   this.setState({checkedState: true})
-    //   // } else {
-    //   //   this.setState({checkedState: false})
-    //   // }
-    //   this.setState(prevState => ({
-    //     usersDataList: prevState.usersDataList.map(eachData => {
-    //       if (event.target.checked) {
-    //         return {...eachData, ischecked: true}
-    //       }
-    //       return {...eachData, ischecked: false}
-    //     }),
-    //   }))
+    const {ischecked} = this.state
+    // console.log(event.target.checked)
+    this.setState(prevState => ({
+      usersDataList: prevState.usersDataList.map(eachData => {
+        if (event.target.checked) {
+          return {...eachData, ischecked: !prevState.ischecked}
+        }
+        return {...eachData, ischecked: ischecked}
+      }),
+    }))
   }
 
   render() {
@@ -134,7 +139,6 @@ class AllUsers extends Component {
           {filteredUsersDataList.map(eachUserData => (
             <UserItem
               key={eachUserData.id}
-              // checkItem={this.checkAllItems(false)}
               userDetails={eachUserData}
               deleteUserEntry={this.deleteUserEntry}
               addToSelectedUsers={this.addToSelectedUsers}

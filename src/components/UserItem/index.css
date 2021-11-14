@@ -90,3 +90,8 @@
     flex-wrap: wrap;
   }
 }
+
+.active {
+  background-color: #1e293b;
+  color: red;
+}
