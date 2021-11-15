@@ -32,6 +32,8 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #2e3e4e;
+  background-color: #2d88a8;
+  width: 100%;
 }
 
 /* .check-box-input {
@@ -42,7 +44,7 @@
   font-weight: 600;
   font-family: Roboto;
   font-size: 20px;
-  color: #1e293b;
+  color: #fff;
   /* margin-left: 32px; */
   display: flex;
   align-items: center;
@@ -59,4 +61,19 @@
     width: 15%;
     flex-wrap: wrap;
   }
+}
+
+.delete-all-btn {
+  background-color: #2d88a8;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  line-height: 2;
+  border-radius: 5px;
+}
+
+.bottom-container {
+  display: flex;
+  justify-content: space-around;
 }

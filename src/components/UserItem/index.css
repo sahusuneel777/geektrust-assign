@@ -79,19 +79,13 @@
   align-items: center;
   width: 15%;
 }
-
-.email {
-  width: 20%;
-}
-
 @media screen and (max-width: 760px) {
-  .email {
-    width: 15%;
-    flex-wrap: wrap;
+  .table-cell {
+    word-wrap: break-word;
   }
 }
 
 .active {
-  background-color: #1e293b;
+  background-color: #cdcdcd;
   color: red;
 }
