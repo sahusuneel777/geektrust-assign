@@ -76,6 +76,11 @@
   color: #e81515;
 }
 
+.save-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 .delete-button:hover {
   font-size: 16px;
 }

@@ -89,7 +89,7 @@ class UserItem extends Component {
 
         <div className="table-cell">
           {isedited ? (
-            <button type="button" onClick={saveItem}>
+            <button type="button" className="save-button" onClick={saveItem}>
               <FiSave />
             </button>
           ) : (
