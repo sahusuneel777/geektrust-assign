@@ -42,6 +42,19 @@
   border-bottom: 1px solid #2e3e4e;
 }
 
+@media screen and (max-width: 768px) {
+  .user-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+.detail-of-person {
+  line-height: 1;
+  margin: 5px;
+}
 .delete-button {
   cursor: pointer;
   background-color: transparent;

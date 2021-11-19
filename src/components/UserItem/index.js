@@ -61,6 +61,7 @@ class UserItem extends Component {
           <input type="checkbox" checked={ischecked} onChange={onChangeCheck} />
           {/* <input type="checkbox" onChange={onChangeCheck} /> */}
         </div>
+
         <div className="table-cell">
           {/* <p>{name}</p> */}
           {isedited ? (

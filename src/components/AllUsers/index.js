@@ -92,7 +92,7 @@ class AllUsers extends Component {
   checkAllItems = event => {
     const {ischecked} = this.state
     this.setState(prevState => ({allChecked: !prevState.allChecked}))
-    // console.log(event.target.checked)
+
     this.setState(prevState => ({
       usersDataList: prevState.usersDataList.map(eachData => {
         if (event.target.checked) {
