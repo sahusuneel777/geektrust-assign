@@ -72,13 +72,18 @@ class AllUsers extends Component {
   }
 
   deleteSelectedUsers = () => {
-    const {selectedUsersList, usersDataList} = this.state
+    // const {selectedUsersList, usersDataList} = this.state
+    const filteredUsersDataList = this.getSearchedUser()
+    //  const currentData = this.getCurrentData()
 
-    const updatedUsers = usersDataList.filter(
-      eachUser => !selectedUsersList.includes(eachUser.id),
+    // const updatedUsers = currentData.filter(
+    //   eachUser => !selectedUsersList.includes(eachUser.id),
+    // )
+    const updatedUsers = filteredUsersDataList.filter(
+      eachUser => !eachUser.ischecked,
     )
 
-    this.setState({usersDataList: updatedUsers})
+    this.setState({usersDataList: updatedUsers, allChecked: false})
   }
 
   onChangeSearchInput = event => {
@@ -164,6 +169,21 @@ class AllUsers extends Component {
     }
   }
 
+  goLastPage = () => {
+    const {allChecked} = this.state
+    const filteredUsersDataList = this.getSearchedUser()
+    const pageNum = Math.ceil(filteredUsersDataList.length / 10)
+    this.setState({activePage: pageNum})
+    this.setState(prevState => ({
+      usersDataList: prevState.usersDataList.map(eachUser => {
+        return {...eachUser, ischecked: false}
+      }),
+    }))
+    if (allChecked) {
+      this.setState(prevState => ({allChecked: !prevState.allChecked}))
+    }
+  }
+
   goToBackWard = () => {
     const {activePage, allChecked} = this.state
     if (activePage > 1) {
@@ -179,60 +199,67 @@ class AllUsers extends Component {
     }
   }
 
-  render() {
-    const {
-      usersDataList,
-      searchInput,
-      activeSearchCategory,
-      activePage,
-      allChecked,
-    } = this.state
+  goToForward = () => {
+    const {activePage, allChecked} = this.state
+    const filteredUsersDataList = this.getSearchedUser()
+
+    const pageNumber = Math.ceil(filteredUsersDataList.length / 10)
+    if (pageNumber > activePage) {
+      this.setState(prevState => ({activePage: prevState.activePage + 1}))
+      this.setState(prevState => ({
+        usersDataList: prevState.usersDataList.map(eachUser => {
+          return {...eachUser, ischecked: false}
+        }),
+        // allChecked: !prevState.allChecked,
+      }))
+    }
+    if (allChecked) {
+      this.setState(prevState => ({allChecked: !prevState.allChecked}))
+    }
+  }
+
+  getSearchedUser = () => {
+    const {usersDataList, searchInput, activeSearchCategory} = this.state
     const activeSearch = `${activeSearchCategory}`
-    const filteredUsersDataList = usersDataList.filter(eachUser =>
+    // console.log(activeSearch)
+
+    const filterData = usersDataList.filter(eachUser =>
       eachUser[activeSearch].toLowerCase().includes(searchInput.toLowerCase()),
     )
+    console.log(`filterData`, filterData)
+    return filterData
+  }
+
+  //   getCurrentData = (offset, limit) => {
+
+  //     const filteredUsersDataList = this.getSearchedUser()
+  //     return filteredUsersDataList.slice(offset, offset + limit)
+  //   }
+
+  render() {
+    const {activePage, allChecked, activeSearchCategory} = this.state
+
+    const filteredUsersDataList = this.getSearchedUser()
+    console.log(`filteredUsersDataList`, filteredUsersDataList)
+    // const filteredUsersDataList = usersDataList.filter(eachUser =>
+    //   eachUser[activeSearch].toLowerCase().includes(searchInput.toLowerCase()),
+    // )
     const limit = 10
-    const offset = (activePage - 1) * limit
+
     const totalNeededPages = Math.ceil(filteredUsersDataList.length / limit)
+    // console.log(totalNeededPages)
     const totalPaginationButtons = []
     for (let index = 1; index < totalNeededPages + 1; index += 1) {
       totalPaginationButtons.push(index)
     }
 
+    const offset = (activePage - 1) * limit
+    // console.log(offset)
     const maxUserList = filteredUsersDataList.slice(offset, offset + limit)
+    console.log(`maxUserList`, maxUserList)
 
-    const goLastPage = () => {
-      const pageNum = Math.ceil(filteredUsersDataList.length / 10)
-      this.setState({activePage: pageNum})
-      this.setState(prevState => ({
-        usersDataList: prevState.usersDataList.map(eachUser => {
-          return {...eachUser, ischecked: false}
-        }),
-      }))
-      if (allChecked) {
-        this.setState(prevState => ({allChecked: !prevState.allChecked}))
-      }
-    }
-
-    const goToForward = () => {
-      const {activePage, allChecked} = this.state
-
-      const pageNumber = Math.ceil(filteredUsersDataList.length / 10)
-      if (pageNumber > activePage) {
-        this.setState(prevState => ({activePage: prevState.activePage + 1}))
-        this.setState(prevState => ({
-          usersDataList: prevState.usersDataList.map(eachUser => {
-            return {...eachUser, ischecked: false}
-          }),
-          // allChecked: !prevState.allChecked,
-        }))
-      }
-      if (allChecked) {
-        this.setState(prevState => ({allChecked: !prevState.allChecked}))
-      }
-    }
     return (
-      <>
+      <div>
         <div className="search-section">
           <select
             activecategory={activeSearchCategory}
@@ -301,15 +328,15 @@ class AllUsers extends Component {
                 isActive={activePage === eachPageButton}
               />
             ))}
-            <button type="button" onClick={goToForward}>
+            <button type="button" onClick={this.goToForward}>
               <AiOutlineRight />
             </button>
-            <button type="button" onClick={goLastPage}>
+            <button type="button" onClick={this.goLastPage}>
               <AiOutlineDoubleRight />
             </button>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

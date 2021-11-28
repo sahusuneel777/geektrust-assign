@@ -65,7 +65,7 @@ class UserItem extends Component {
         <div className="table-cell">
           {/* <p>{name}</p> */}
           {isedited ? (
-            <input type="text" onChange={this.editName} value={nameInput} />
+            <input type="text" onChange={this.editName} value={name} />
           ) : (
             <p className="detail-of-person">{name}</p>
           )}
