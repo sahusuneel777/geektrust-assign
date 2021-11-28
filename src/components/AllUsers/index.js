@@ -74,11 +74,10 @@ class AllUsers extends Component {
   deleteSelectedUsers = () => {
     // const {selectedUsersList, usersDataList} = this.state
     const filteredUsersDataList = this.getSearchedUser()
-    //  const currentData = this.getCurrentData()
-
     // const updatedUsers = currentData.filter(
     //   eachUser => !selectedUsersList.includes(eachUser.id),
     // )
+
     const updatedUsers = filteredUsersDataList.filter(
       eachUser => !eachUser.ischecked,
     )
@@ -97,10 +96,13 @@ class AllUsers extends Component {
   checkAllItems = event => {
     const {ischecked} = this.state
     this.setState(prevState => ({allChecked: !prevState.allChecked}))
-
+    // const filteredUsersDataList = this.getSearchedUser()
+    const {activePage} = this.state
+    const offset = (activePage - 1) * 10
+    const searchedList = this.getSearchedUser().slice(offset, offset + 10)
     this.setState(prevState => ({
       usersDataList: prevState.usersDataList.map(eachData => {
-        if (event.target.checked) {
+        if (event.target.checked && searchedList.includes(eachData)) {
           return {...eachData, ischecked: !prevState.ischecked}
         }
         return {...eachData, ischecked: ischecked}
@@ -230,20 +232,12 @@ class AllUsers extends Component {
     return filterData
   }
 
-  //   getCurrentData = (offset, limit) => {
-
-  //     const filteredUsersDataList = this.getSearchedUser()
-  //     return filteredUsersDataList.slice(offset, offset + limit)
-  //   }
-
   render() {
     const {activePage, allChecked, activeSearchCategory} = this.state
 
     const filteredUsersDataList = this.getSearchedUser()
     console.log(`filteredUsersDataList`, filteredUsersDataList)
-    // const filteredUsersDataList = usersDataList.filter(eachUser =>
-    //   eachUser[activeSearch].toLowerCase().includes(searchInput.toLowerCase()),
-    // )
+
     const limit = 10
 
     const totalNeededPages = Math.ceil(filteredUsersDataList.length / limit)
